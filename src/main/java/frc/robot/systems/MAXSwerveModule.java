@@ -7,6 +7,7 @@ package frc.robot.systems;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
@@ -142,6 +143,8 @@ public class MAXSwerveModule {
 	 * @param newDesiredState Desired state with speed and angle.
 	 */
 	public void setDesiredState(SwerveModuleState newDesiredState) {
+		SmartDashboard.putNumber("Driving Spark MAX" + drivingSparkMax.getDeviceId(), drivingSparkMax.getAppliedOutput());
+		SmartDashboard.putNumber("Turning Spark MAX" + turningSparkMax.getDeviceId(), turningSparkMax.getAppliedOutput());
 		// Apply chassis angular offset to the desired state.
 		SwerveModuleState correctedDesiredState = new SwerveModuleState();
 		correctedDesiredState.speedMetersPerSecond = newDesiredState.speedMetersPerSecond;

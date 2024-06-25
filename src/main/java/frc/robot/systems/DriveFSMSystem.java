@@ -313,6 +313,11 @@ public class DriveFSMSystem extends SubsystemBase {
 		SmartDashboard.putNumber("Y Pos", getPose().getY());
 		SmartDashboard.putNumber("Heading", getPose().getRotation().getDegrees());
 
+
+		SmartDashboard.putNumber("Gyro Angle", gyro.getAngle());
+		SmartDashboard.putNumber("Gyro Yaw", gyro.getYaw());
+		SmartDashboard.putNumber("Gyro Fused Heading", gyro.getFusedHeading());
+
 		switch (currentState) {
 			case TELEOP_STATE:
 				drive(-MathUtil.applyDeadband((input.getControllerLeftJoystickY()
@@ -374,9 +379,6 @@ public class DriveFSMSystem extends SubsystemBase {
 				frontRight.getPosition(),
 				rearLeft.getPosition(),
 				rearRight.getPosition()});
-		SmartDashboard.putNumber("X Pos", getPose().getX());
-		SmartDashboard.putNumber("Y Pos", getPose().getY());
-		SmartDashboard.putNumber("Heading", getPose().getRotation().getDegrees());
 	}
 
 
