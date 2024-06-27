@@ -318,6 +318,7 @@ public class DriveFSMSystem extends SubsystemBase {
 		SmartDashboard.putNumber("Gyro Yaw", gyro.getYaw());
 		SmartDashboard.putNumber("Gyro Fused Heading", gyro.getFusedHeading());
 
+
 		switch (currentState) {
 			case TELEOP_STATE:
 				drive(-MathUtil.applyDeadband((input.getControllerLeftJoystickY()
@@ -442,6 +443,8 @@ public class DriveFSMSystem extends SubsystemBase {
 		double xSpeedDelivered = xSpeed * DriveConstants.MAX_SPEED_METERS_PER_SECOND;
 		double ySpeedDelivered = ySpeed * DriveConstants.MAX_SPEED_METERS_PER_SECOND;
 		double rotDelivered = rot * DriveConstants.MAX_ANGULAR_SPEED;
+
+
 
 		var swerveModuleStates = DriveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(
 			fieldRelative

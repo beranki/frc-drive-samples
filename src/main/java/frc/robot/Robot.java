@@ -156,6 +156,7 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		driveFSMSystem.update(input);
 		mbrfsMv2.update(input);
+		mField.setRobotPose(driveFSMSystem.getPose());
 	}
 
 	@Override
