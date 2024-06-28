@@ -444,6 +444,9 @@ public class DriveFSMSystem extends SubsystemBase {
 		double ySpeedDelivered = ySpeed * DriveConstants.MAX_SPEED_METERS_PER_SECOND;
 		double rotDelivered = rot * DriveConstants.MAX_ANGULAR_SPEED;
 
+		SmartDashboard.putNumber("x speed delivered", xSpeedDelivered);
+		SmartDashboard.putNumber("y speed delivered", ySpeedDelivered);
+		SmartDashboard.putNumber("rot speed delivered", rotDelivered);
 
 
 		var swerveModuleStates = DriveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(
@@ -458,6 +461,7 @@ public class DriveFSMSystem extends SubsystemBase {
 		frontRight.setDesiredState(swerveModuleStates[1]);
 		rearLeft.setDesiredState(swerveModuleStates[2]);
 		rearRight.setDesiredState(swerveModuleStates[(2 + 1)]);
+
 	}
 
 

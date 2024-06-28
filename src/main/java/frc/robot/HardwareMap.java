@@ -14,15 +14,15 @@ public final class HardwareMap {
 
 	// NEW Chassis
 
-	public static final int FRONT_LEFT_DRIVING_CAN_ID = 2; // 2
-	public static final int FRONT_RIGHT_DRIVING_CAN_ID = 8; // 8
-	public static final int REAR_LEFT_DRIVING_CAN_ID = 4; // 4
-	public static final int REAR_RIGHT_DRIVING_CAN_ID = 6; // 6
+	public static final int FRONT_LEFT_DRIVING_CAN_ID = 4; // 2
+	public static final int FRONT_RIGHT_DRIVING_CAN_ID = 2; // 8
+	public static final int REAR_LEFT_DRIVING_CAN_ID = 6; // 4
+	public static final int REAR_RIGHT_DRIVING_CAN_ID = 8; // 6
 
-	public static final int FRONT_LEFT_TURNING_CAN_ID = 1; // 1
-	public static final int FRONT_RIGHT_TURNING_CAN_ID = 7; // 7
-	public static final int REAR_LEFT_TURNING_CAN_ID = 3; // 3
-	public static final int REAR_RIGHT_TURNING_CAN_ID = 5; // 5
+	public static final int FRONT_LEFT_TURNING_CAN_ID = 3; // 1
+	public static final int FRONT_RIGHT_TURNING_CAN_ID = 1; // 7
+	public static final int REAR_LEFT_TURNING_CAN_ID = 5; // 3
+	public static final int REAR_RIGHT_TURNING_CAN_ID = 7; // 5
 
 	// OLD Chassis
 
