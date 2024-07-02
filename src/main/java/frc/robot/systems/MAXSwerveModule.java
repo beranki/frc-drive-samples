@@ -143,8 +143,6 @@ public class MAXSwerveModule {
 	 * @param newDesiredState Desired state with speed and angle.
 	 */
 	public void setDesiredState(SwerveModuleState newDesiredState) {
-		SmartDashboard.putNumber("Driving Spark MAX" + drivingSparkMax.getDeviceId(), drivingSparkMax.getAppliedOutput());
-		SmartDashboard.putNumber("Turning Spark MAX" + turningSparkMax.getDeviceId(), turningSparkMax.getAppliedOutput());
 		// Apply chassis angular offset to the desired state.
 		SwerveModuleState correctedDesiredState = new SwerveModuleState();
 		correctedDesiredState.speedMetersPerSecond = newDesiredState.speedMetersPerSecond;
@@ -154,6 +152,11 @@ public class MAXSwerveModule {
 		// Optimize the reference state to avoid spinning further than 90 degrees.
 		SwerveModuleState optimizedDesiredState = SwerveModuleState.optimize(correctedDesiredState,
 				new Rotation2d(turningEncoder.getPosition()));
+
+		SmartDashboard.putNumber("Driving Spark MAX" + drivingSparkMax.getDeviceId(),
+			optimizedDesiredState.speedMetersPerSecond);
+		SmartDashboard.putNumber("Turning Spark MAX" + turningSparkMax.getDeviceId(),
+			optimizedDesiredState.angle.getRadians());
 
 		// Command driving and turning SPARKS MAX towards their respective setpoints.
 		drivingPIDController.setReference(optimizedDesiredState

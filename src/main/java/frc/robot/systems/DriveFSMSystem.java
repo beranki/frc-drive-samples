@@ -318,6 +318,17 @@ public class DriveFSMSystem extends SubsystemBase {
 		SmartDashboard.putNumber("Gyro Yaw", gyro.getYaw());
 		SmartDashboard.putNumber("Gyro Fused Heading", gyro.getFusedHeading());
 
+		SmartDashboard.putNumber("x feed", -MathUtil.applyDeadband((input.getControllerLeftJoystickY()
+					* Math.abs(input.getControllerLeftJoystickY()) * ((input.getLeftTrigger() / 2)
+					+ DriveConstants.LEFT_TRIGGER_DRIVE_CONSTANT) / 2), OIConstants.DRIVE_DEADBAND));
+
+		SmartDashboard.putNumber("y feed", -MathUtil.applyDeadband((input.getControllerLeftJoystickX()
+					* Math.abs(input.getControllerLeftJoystickX()) * ((input.getLeftTrigger() / 2)
+					+ DriveConstants.LEFT_TRIGGER_DRIVE_CONSTANT) / 2), OIConstants.DRIVE_DEADBAND));
+		
+		SmartDashboard.putNumber("ang feed", -MathUtil.applyDeadband((input.getControllerRightJoystickX()
+					* ((input.getLeftTrigger() / 2) + DriveConstants.LEFT_TRIGGER_DRIVE_CONSTANT)
+					/ DriveConstants.ANGULAR_SPEED_LIMIT_CONSTANT), OIConstants.DRIVE_DEADBAND));
 
 		switch (currentState) {
 			case TELEOP_STATE:
@@ -454,6 +465,17 @@ public class DriveFSMSystem extends SubsystemBase {
 				? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered, ySpeedDelivered,
 					rotDelivered, Rotation2d.fromDegrees(getHeading()))
 				: new ChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered));
+
+		SmartDashboard.putNumber("s0d", swerveModuleStates[0].speedMetersPerSecond);
+		SmartDashboard.putNumber("s1d", swerveModuleStates[1].speedMetersPerSecond);
+		SmartDashboard.putNumber("s2d", swerveModuleStates[2].speedMetersPerSecond);
+		SmartDashboard.putNumber("s3d", swerveModuleStates[3].speedMetersPerSecond);
+
+		SmartDashboard.putNumber("s0t", swerveModuleStates[0].angle.getRadians());
+		SmartDashboard.putNumber("s1t", swerveModuleStates[1].angle.getRadians());
+		SmartDashboard.putNumber("s2t", swerveModuleStates[2].angle.getRadians());
+		SmartDashboard.putNumber("s3t", swerveModuleStates[3].angle.getRadians());
+		
 		SwerveDriveKinematics.desaturateWheelSpeeds(
 			swerveModuleStates, DriveConstants.MAX_SPEED_METERS_PER_SECOND);
 
@@ -462,6 +484,10 @@ public class DriveFSMSystem extends SubsystemBase {
 		rearLeft.setDesiredState(swerveModuleStates[2]);
 		rearRight.setDesiredState(swerveModuleStates[(2 + 1)]);
 
+		System.out.println(swerveModuleStates[0]);
+		System.out.println(swerveModuleStates[1]);
+		System.out.println(swerveModuleStates[2]);
+		System.out.println(swerveModuleStates[3]);
 	}
 
 
@@ -648,7 +674,7 @@ public class DriveFSMSystem extends SubsystemBase {
 				rearRight.getPosition()});
 		SmartDashboard.putNumber("X Pos", getPose().getX());
 		SmartDashboard.putNumber("Y Pos", getPose().getY());
-		SmartDashboard.putNumber("Heading", getPose().getRotation().getDegrees());
+		SmartDashboard.putNumber("Heading", getHeading());
 
 		var swerveModuleStates =
 			DriveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(robotRelSpeeds);
