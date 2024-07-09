@@ -24,7 +24,7 @@ public class RevShooterTimed extends Command {
 	 * Makes a command that shoots the note out.
 	 * @param timeShooting how much time the shooter is expected to rev for
 	 */
-	public RevShooterTimed(MBRFSMv2 mbrFSM) {
+	public RevShooterTimed(MBRFSMv2 mbrFSM, double timeShooting) {
 		// Use addRequirements() here to declare subsystem dependencies.
 
 		//throughBore = new Encoder(0, 1);

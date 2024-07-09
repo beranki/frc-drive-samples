@@ -3,41 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3533001663498863,
-        "y": 5.565873600441298
+        "x": 1.3429797933242715,
+        "y": 5.550562440965166
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.3533001663498903,
-        "y": 5.565873600441298
+        "x": 1.7727477513517582,
+        "y": 5.863783156137741
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.5868974814872714,
-        "y": 6.770099550932555
+        "x": 2.508452221873388,
+        "y": 6.63590864005153
       },
       "prevControl": {
-        "x": 1.1183292491808605,
-        "y": 7.240041385270605
+        "x": 2.7998203290106667,
+        "y": 6.89813993647508
       },
       "nextControl": {
-        "x": 3.9687109962877547,
-        "y": 6.327919226196401
+        "x": 2.136805148749807,
+        "y": 6.301426274240308
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.3533001663498863,
-        "y": 5.565873600441298
+        "x": 1.3429797933242715,
+        "y": 5.550562440965166
       },
       "prevControl": {
-        "x": 2.3372408819951813,
-        "y": 5.565873600441298
+        "x": 1.7946003593870539,
+        "y": 5.900204169529902
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,16 +46,21 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.0,
-      "rotationDegrees": -108.43494882292201,
+      "waypointRelativePos": 0.45,
+      "rotationDegrees": 43.131369747611586,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 1.35,
+      "rotationDegrees": 44.47573952486212,
       "rotateFast": false
     }
   ],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "S_PSG",
-      "waypointRelativePos": 0.2,
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.15,
       "command": {
         "type": "sequential",
         "data": {
@@ -71,8 +76,8 @@
       }
     },
     {
-      "name": "S_PGS",
-      "waypointRelativePos": 1.4,
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.55,
       "command": {
         "type": "sequential",
         "data": {
@@ -80,7 +85,41 @@
             {
               "type": "named",
               "data": {
-                "name": "S_PGS"
+                "name": "S_TIN"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.9,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "S_TRS"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 2.0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "S_TON"
               }
             }
           ]

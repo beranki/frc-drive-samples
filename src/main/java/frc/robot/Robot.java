@@ -46,11 +46,12 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 // Systems
 import frc.robot.systems.DriveFSMSystem;
 import frc.robot.systems.MBRFSMv2;
-
+import frc.robot.commands.mech.IntakeNoteTimed;
 //Commands
 import frc.robot.commands.mech.IntakeNoteUntimed;
 import frc.robot.commands.mech.PivotGroundToShooter;
 import frc.robot.commands.mech.PivotShooterToGround;
+import frc.robot.commands.mech.RevShooterTimed;
 import frc.robot.commands.mech.RevShooterUntimed;
 import frc.robot.commands.mech.OuttakeNote;
 import frc.robot.commands.align.AprilTagAlign;
@@ -95,10 +96,12 @@ public class Robot extends TimedRobot {
 		driveFSMSystem = new DriveFSMSystem();
 		mbrfsMv2 = new MBRFSMv2();
 
+		NamedCommands.registerCommand("S_TIN", new IntakeNoteTimed(mbrfsMv2, MechConstants.TIMED_INTAKING_DURATION));
 		NamedCommands.registerCommand("S_UIN", new IntakeNoteUntimed(mbrfsMv2));
 		NamedCommands.registerCommand("S_PGS", new PivotGroundToShooter(mbrfsMv2));
 		NamedCommands.registerCommand("S_PSG", new PivotShooterToGround(mbrfsMv2));
 		NamedCommands.registerCommand("S_URS", new RevShooterUntimed(mbrfsMv2));
+		NamedCommands.registerCommand("S_TRS", new RevShooterTimed(mbrfsMv2, MechConstants.TIMED_REVVING_DURATION));
 		NamedCommands.registerCommand("S_TON", new OuttakeNote(MechConstants.AUTO_SHOOTING_TIME,
 			mbrfsMv2));
 		NamedCommands.registerCommand("S_ART", new AprilTagAlign(redSpeakerTagID,

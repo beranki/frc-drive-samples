@@ -325,7 +325,8 @@ public class DriveFSMSystem extends SubsystemBase {
 					* ((input.getLeftTrigger() / 2) + DriveConstants.LEFT_TRIGGER_DRIVE_CONSTANT)
 					/ DriveConstants.ANGULAR_SPEED_LIMIT_CONSTANT), OIConstants.DRIVE_DEADBAND),
 					true);
-				if (input.isBackButtonPressed()) {
+
+					if (input.isBackButtonPressed()) {
 					gyro.reset();
 				}
 				break;

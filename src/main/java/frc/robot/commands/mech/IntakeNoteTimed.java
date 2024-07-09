@@ -24,7 +24,7 @@ public class IntakeNoteTimed extends Command {
 	 * Makes a command that shoots the note out.
 	 * @param timeIntaking time the intake outtakes the note
 	 */
-	public IntakeNoteTimed(float timeIntaking, MBRFSMv2 mbrFSM) {
+	public IntakeNoteTimed(MBRFSMv2 mbrFSM, float timeIntaking) {
 		// Use addRequirements() here to declare subsystem dependencies.
 
 		timer = new Timer();
