@@ -16,6 +16,8 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -99,6 +101,14 @@ public class DriveFSMSystem extends SubsystemBase {
 
 	private boolean redAlliance;
 	private Double[] tagOrientationAngles;
+
+	private StructArrayPublisher<SwerveModuleState> statePublisher
+		= NetworkTableInstance.getDefault().getStructArrayTopic("MyStates",
+		SwerveModuleState.struct).publish();
+
+	private StructArrayPublisher<Pose2d> posePublisher
+		= NetworkTableInstance.getDefault().getStructArrayTopic("MyPose",
+		Pose2d.struct).publish();
 
 
 	/* ======================== Constructor ======================== */
@@ -313,22 +323,47 @@ public class DriveFSMSystem extends SubsystemBase {
 		SmartDashboard.putNumber("Y Pos", getPose().getY());
 		SmartDashboard.putNumber("Heading", getPose().getRotation().getDegrees());
 
-
+		/*
 		SmartDashboard.putNumber("Gyro Angle", gyro.getAngle());
 		SmartDashboard.putNumber("Gyro Yaw", gyro.getYaw());
 		SmartDashboard.putNumber("Gyro Fused Heading", gyro.getFusedHeading());
+		*/
 
-		SmartDashboard.putNumber("x feed", -MathUtil.applyDeadband((input.getControllerLeftJoystickY()
+		SmartDashboard.putNumber("x feed", -MathUtil.applyDeadband((
+			input.getControllerLeftJoystickY()
 					* Math.abs(input.getControllerLeftJoystickY()) * ((input.getLeftTrigger() / 2)
-					+ DriveConstants.LEFT_TRIGGER_DRIVE_CONSTANT) / 2), OIConstants.DRIVE_DEADBAND));
+					+ DriveConstants.LEFT_TRIGGER_DRIVE_CONSTANT) / 2),
+					OIConstants.DRIVE_DEADBAND));
 
-		SmartDashboard.putNumber("y feed", -MathUtil.applyDeadband((input.getControllerLeftJoystickX()
+		SmartDashboard.putNumber("y feed", -MathUtil.applyDeadband((
+			input.getControllerLeftJoystickX()
 					* Math.abs(input.getControllerLeftJoystickX()) * ((input.getLeftTrigger() / 2)
-					+ DriveConstants.LEFT_TRIGGER_DRIVE_CONSTANT) / 2), OIConstants.DRIVE_DEADBAND));
-		
-		SmartDashboard.putNumber("ang feed", -MathUtil.applyDeadband((input.getControllerRightJoystickX()
+					+ DriveConstants.LEFT_TRIGGER_DRIVE_CONSTANT) / 2),
+					OIConstants.DRIVE_DEADBAND));
+
+		SmartDashboard.putNumber("ang feed", -MathUtil.applyDeadband(
+			(input.getControllerRightJoystickX()
 					* ((input.getLeftTrigger() / 2) + DriveConstants.LEFT_TRIGGER_DRIVE_CONSTANT)
-					/ DriveConstants.ANGULAR_SPEED_LIMIT_CONSTANT), OIConstants.DRIVE_DEADBAND));
+					/ DriveConstants.ANGULAR_SPEED_LIMIT_CONSTANT),
+					OIConstants.DRIVE_DEADBAND));
+
+
+
+		SwerveModuleState[] states = new SwerveModuleState[] {
+			frontLeft.getState(),
+			frontRight.getState(),
+			rearLeft.getState(),
+			rearRight.getState()
+		};
+
+		Pose2d[] poses = new Pose2d[] {
+			getPose()
+		};
+
+		statePublisher.set(states);
+		posePublisher.set(poses);
+
+
 
 		switch (currentState) {
 			case TELEOP_STATE:
@@ -342,9 +377,19 @@ public class DriveFSMSystem extends SubsystemBase {
 					* ((input.getLeftTrigger() / 2) + DriveConstants.LEFT_TRIGGER_DRIVE_CONSTANT)
 					/ DriveConstants.ANGULAR_SPEED_LIMIT_CONSTANT), OIConstants.DRIVE_DEADBAND),
 					true);
+
 				if (input.isBackButtonPressed()) {
 					gyro.reset();
 				}
+
+				if (input.isTriangleButtonPressed()) {
+					setForwardFormation();
+				}
+
+				if (input.isOptionsButtonPressed()) {
+					setXFormation();
+				}
+
 				break;
 
 			case ALIGN_TO_SPEAKER_STATE:
@@ -469,13 +514,13 @@ public class DriveFSMSystem extends SubsystemBase {
 		SmartDashboard.putNumber("s0d", swerveModuleStates[0].speedMetersPerSecond);
 		SmartDashboard.putNumber("s1d", swerveModuleStates[1].speedMetersPerSecond);
 		SmartDashboard.putNumber("s2d", swerveModuleStates[2].speedMetersPerSecond);
-		SmartDashboard.putNumber("s3d", swerveModuleStates[3].speedMetersPerSecond);
+		SmartDashboard.putNumber("s3d", swerveModuleStates[(2 + 1)].speedMetersPerSecond);
 
 		SmartDashboard.putNumber("s0t", swerveModuleStates[0].angle.getRadians());
 		SmartDashboard.putNumber("s1t", swerveModuleStates[1].angle.getRadians());
 		SmartDashboard.putNumber("s2t", swerveModuleStates[2].angle.getRadians());
-		SmartDashboard.putNumber("s3t", swerveModuleStates[3].angle.getRadians());
-		
+		SmartDashboard.putNumber("s3t", swerveModuleStates[(2 + 1)].angle.getRadians());
+
 		SwerveDriveKinematics.desaturateWheelSpeeds(
 			swerveModuleStates, DriveConstants.MAX_SPEED_METERS_PER_SECOND);
 
@@ -484,10 +529,10 @@ public class DriveFSMSystem extends SubsystemBase {
 		rearLeft.setDesiredState(swerveModuleStates[2]);
 		rearRight.setDesiredState(swerveModuleStates[(2 + 1)]);
 
-		System.out.println(swerveModuleStates[0]);
-		System.out.println(swerveModuleStates[1]);
-		System.out.println(swerveModuleStates[2]);
-		System.out.println(swerveModuleStates[3]);
+		System.out.println("S1" + swerveModuleStates[0]);
+		System.out.println("S2" + swerveModuleStates[1]);
+		System.out.println("S3" + swerveModuleStates[2]);
+		System.out.println("S4" + swerveModuleStates[(2 + 1)]);
 	}
 
 
@@ -632,6 +677,26 @@ public class DriveFSMSystem extends SubsystemBase {
 			System.out.println("stopped note alignment");
 			drive(0, 0, 0, false);
 		}
+	}
+
+	/**
+	 * Sets the formation of the swerve wheels in an X.
+	 */
+	public void setXFormation() {
+		frontLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
+		frontRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)));
+		rearLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)));
+		rearRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
+	}
+
+	/**
+	 * Sets the formation of the swerve wheels to be forward.
+	 */
+	public void setForwardFormation() {
+		frontLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(0)));
+		frontRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(0)));
+		rearLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(0)));
+		rearRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(0)));
 	}
 
 	/**

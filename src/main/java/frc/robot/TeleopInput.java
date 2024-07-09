@@ -125,6 +125,15 @@ public class TeleopInput {
 		return driverController.getR2Axis();
 	}
 
+	/**
+	 * Get the value of the Options Button.
+	 * @return if Options Button is pressed
+	 */
+	public boolean isOptionsButtonPressed() {
+		return mechController.getOptionsButton();
+	}
+
+
 	/* ------------------------ Mech Controller ------------------------ */
 		/**
 	 * Get the value of the Triangle Button.

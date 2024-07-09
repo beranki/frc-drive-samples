@@ -3,58 +3,24 @@
 // the WPILib BSD license file in the root directory of this project.
 package frc.robot;
 
-import java.util.Arrays;
-import java.util.List;
-
-import com.ctre.phoenix6.mechanisms.MechanismState;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-import com.pathplanner.lib.commands.PathPlannerAuto;
-import com.revrobotics.REVPhysicsSim;
 
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.cscore.VideoSource.ConnectionStrategy;
-import edu.wpi.first.math.Pair;
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.cscore.MjpegServer;
 import edu.wpi.first.cscore.UsbCamera;
-import edu.wpi.first.cscore.VideoMode;
 import edu.wpi.first.cscore.VideoSink;
-import edu.wpi.first.util.PixelFormat;
 import edu.wpi.first.wpilibj.Encoder;
 // WPILib Imports
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
-import frc.robot.SwerveConstants.AutoConstants;
-import frc.robot.SwerveConstants.DriveConstants;
-import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 // Systems
 import frc.robot.systems.DriveFSMSystem;
 import frc.robot.systems.MBRFSMv2;
-
-//Commands
-import frc.robot.commands.mech.IntakeNoteUntimed;
-import frc.robot.commands.mech.PivotGroundToShooter;
-import frc.robot.commands.mech.PivotShooterToGround;
-import frc.robot.commands.mech.RevShooterUntimed;
-import frc.robot.commands.mech.OuttakeNote;
-import frc.robot.commands.align.AprilTagAlign;
-import frc.robot.commands.align.NoteAlign;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -95,18 +61,23 @@ public class Robot extends TimedRobot {
 		driveFSMSystem = new DriveFSMSystem();
 		mbrfsMv2 = new MBRFSMv2();
 
-		NamedCommands.registerCommand("S_UIN", new IntakeNoteUntimed(mbrfsMv2));
-		NamedCommands.registerCommand("S_PGS", new PivotGroundToShooter(mbrfsMv2));
-		NamedCommands.registerCommand("S_PSG", new PivotShooterToGround(mbrfsMv2));
-		NamedCommands.registerCommand("S_URS", new RevShooterUntimed(mbrfsMv2));
-		NamedCommands.registerCommand("S_TON", new OuttakeNote(MechConstants.AUTO_SHOOTING_TIME,
-			mbrfsMv2));
+		NamedCommands.registerCommand("IntakeNote", mbrfsMv2.new IntakeNoteCommand());
+		NamedCommands.registerCommand("GroundToShooter",
+			mbrfsMv2.new PivotGroundToShooterCommand());
+		NamedCommands.registerCommand("ShooterToGround",
+			mbrfsMv2.new PivotShooterToGroundCommand());
+		NamedCommands.registerCommand("RevShooter", mbrfsMv2.new RevShooterCommand());
+		NamedCommands.registerCommand("ShootPNote", mbrfsMv2.new ShootPreloadedCommand());
+		NamedCommands.registerCommand("ShootNote", mbrfsMv2.new ShootNoteCommand());
+
+		/*
 		NamedCommands.registerCommand("S_ART", new AprilTagAlign(redSpeakerTagID,
 			driveFSMSystem, 0.5));
 		NamedCommands.registerCommand("S_ABT", new AprilTagAlign(blueSpeakerTagID,
 			driveFSMSystem, 0.5));
 		NamedCommands.registerCommand("S_AXN", new NoteAlign(driveFSMSystem,
 			0.5));
+		*/
 
 		autoChooser = AutoBuilder.buildAutoChooser();
 

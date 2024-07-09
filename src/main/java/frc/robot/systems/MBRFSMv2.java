@@ -7,12 +7,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 // Third party Hardware Imports
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.ColorSensorV3;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj.Encoder;
 // import frc.robot.systems.AutoHandlerSystem.AutoFSMState;
-
+import edu.wpi.first.wpilibj.I2C;
 // Robot Imports
 import frc.robot.TeleopInput;
 import frc.robot.HardwareMap;
@@ -32,6 +33,7 @@ public class MBRFSMv2 {
 
 	private double[] currLogs;
 	private int tick = 0;
+	private boolean holding = false;
 	private int noteColorFrames = 0;
 
 	/* ======================== Private variables ======================== */
@@ -40,6 +42,7 @@ public class MBRFSMv2 {
 	private CANSparkMax shooterRightMotor;
 	private TalonFX intakeMotor;
 	private TalonFX pivotMotor;
+	private final ColorSensorV3 colorSensor;
 	//private LED led = new LED();
 
 	// Hardware devices should be owned by one and only one system. They must
@@ -74,7 +77,7 @@ public class MBRFSMv2 {
 		timer = new Timer();
 		currLogs = new double[MechConstants.AVERAGE_SIZE];
 
-		//colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
+		colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
 
 		// Reset state machine
 		reset();
@@ -99,6 +102,7 @@ public class MBRFSMv2 {
 	public void reset() {
 		//ledled.greenLight(false);
 		currentState = MBRFSMState.MOVE_TO_SHOOTER;
+		holding = false;
 
 		timer.stop();
 		timer.reset();
@@ -117,7 +121,9 @@ public class MBRFSMv2 {
 			return;
 		}
 
-		currLogs[tick % MechConstants.AVERAGE_SIZE] = intakeMotor.getSupplyCurrent().getValueAsDouble();
+		currLogs[tick % MechConstants.AVERAGE_SIZE] =
+			intakeMotor.getSupplyCurrent().getValueAsDouble();
+
 		tick++;
 
 		double avgcone = 0;
@@ -127,6 +133,7 @@ public class MBRFSMv2 {
 		avgcone /= MechConstants.AVERAGE_SIZE;
 
 		SmartDashboard.putNumber("avg current", avgcone);
+		SmartDashboard.putBoolean("holding", holding);
 
 		SmartDashboard.putNumber("CurrentNoteFrames", noteColorFrames);
 		SmartDashboard.putString("Current State", getCurrentState().toString());
@@ -135,7 +142,8 @@ public class MBRFSMv2 {
 		SmartDashboard.putNumber("Left shooter power", shooterLeftMotor.get());
 		SmartDashboard.putNumber("Right shooter power", shooterRightMotor.get());
 		SmartDashboard.putNumber("Pivot encoder count", throughBore.getDistance());
-
+		SmartDashboard.putNumber("Proximity", colorSensor.getProximity());
+		SmartDashboard.putBoolean("HASNOTE --- ", hasNote());
 
 		switch (currentState) {
 			case MOVE_TO_SHOOTER:
@@ -160,11 +168,11 @@ public class MBRFSMv2 {
 		currentState = nextState(input);
 	}
 
-	/**
-	 * Performs specific action based on the autoState passed in.
-	 * @param autoState autoState that the subsystem executes.
-	 * @return if the action carried out in this state has finished executing
-	 */
+	///**
+	// * Performs specific action based on the autoState passed in.
+	// * @param autoState autoState that the subsystem executes.
+	// * @return if the action carried out in this state has finished executing
+	// */
 	// public boolean updateAutonomous(AutoFSMState autoState) {
 	// 	switch (autoState) {
 	// 		case NOTE1:
@@ -208,18 +216,24 @@ public class MBRFSMv2 {
 		switch (currentState) {
 			case MOVE_TO_SHOOTER:
 				if (input.isIntakeButtonPressed() && !input.isShootButtonPressed()
-					&& !input.isRevButtonPressed() && !input.isAmpButtonPressed()) {
+					&& !input.isRevButtonPressed() && !input.isAmpButtonPressed()
+					&& !holding) {
 					return MBRFSMState.MOVE_TO_GROUND;
 				}
+
 				if (input.isAmpButtonPressed() && !input.isIntakeButtonPressed()
 					&& !input.isShootButtonPressed()
 					&& !input.isRevButtonPressed()) {
 					return MBRFSMState.MOVE_TO_AMP;
 				}
+
 				if (!input.isIntakeButtonPressed() && !input.isAmpButtonPressed()
 					&& (input.isShootButtonPressed()
 					|| input.isRevButtonPressed())) {
-					if (inRange(throughBore.getDistance(), MechConstants.SHOOTER_ENCODER_ROTATIONS)) {
+					if (inRange(throughBore.getDistance(),
+						MechConstants.SHOOTER_ENCODER_ROTATIONS)) {
+						holding = false;
+
 						return MBRFSMState.SHOOTING;
 					} else {
 						return MBRFSMState.MOVE_TO_SHOOTER;
@@ -229,7 +243,8 @@ public class MBRFSMv2 {
 			case MOVE_TO_GROUND:
 				if (input.isIntakeButtonPressed() && !input.isShootButtonPressed()
 					&& !input.isRevButtonPressed() && !input.isAmpButtonPressed()) {
-					if (inRange(throughBore.getDistance(), MechConstants.GROUND_ENCODER_ROTATIONS)) {
+					if (inRange(throughBore.getDistance(),
+						MechConstants.GROUND_ENCODER_ROTATIONS)) {
 						return MBRFSMState.INTAKING;
 					} else {
 						return MBRFSMState.MOVE_TO_GROUND;
@@ -259,7 +274,7 @@ public class MBRFSMv2 {
 		}
 	}
 
-	/* ------------------------ FSM state handlers ------------------------ */
+	/* ------------------------ Command handlers ------------------------ */
 
 	private boolean inRange(double a, double b) {
 		return Math.abs(a - b) < MechConstants.INRANGE_VALUE; //EXPERIMENTAL
@@ -295,6 +310,9 @@ public class MBRFSMv2 {
 	public void setShooterRightMotorPower(double power) {
 		shooterRightMotor.set(power);
 	}
+
+	/* ---------------------------- FSM State Handlers ---------------------------- */
+
 	/**
 	 * Handles the moving to shooter state of the MBR Mech.
 	 * @param input
@@ -310,6 +328,7 @@ public class MBRFSMv2 {
 			intakeMotor.set(0.2);
 		} else if (input.isManualOuttakeButtonPressed() && !input.isManualIntakeButtonPressed()) {
 			intakeMotor.set(-0.2);
+			holding = false;
 		}
 	}
 
@@ -344,8 +363,9 @@ public class MBRFSMv2 {
 		shooterLeftMotor.set(0);
 		shooterRightMotor.set(0);
 		if (!input.isManualIntakeButtonPressed() && !input.isManualOuttakeButtonPressed()) {
-			intakeMotor.set(MechConstants.INTAKE_POWER);
-		} else if (input.isManualIntakeButtonPressed() && !input.isManualOuttakeButtonPressed()) {
+			intakeMotor.set(0);
+		} else if (input.isManualIntakeButtonPressed() && !input.isManualOuttakeButtonPressed()
+			&& !holding) {
 			intakeMotor.set(0.2);
 		} else if (input.isManualOuttakeButtonPressed() && !input.isManualIntakeButtonPressed()) {
 			intakeMotor.set(-0.2);
@@ -492,6 +512,213 @@ public class MBRFSMv2 {
 		intakeMotor.set(MechConstants.AUTO_INTAKE_POWER);
 		shooterLeftMotor.set(0);
 		shooterRightMotor.set(0);
-		return true;
+		return hasNote();
 	}
+
+	/**
+	 * Checks if the intake is holding a note.
+	 * @return if the intake is holding a note
+	 */
+	public boolean hasNote() {
+		boolean isInRange = colorSensor.getProximity() >= MechConstants.PROXIMIIY_THRESHOLD;
+		SmartDashboard.putBoolean("is close enough", isInRange);
+
+		noteColorFrames = isInRange ? (noteColorFrames + 1) : 0;
+		holding = noteColorFrames >= MechConstants.NOTE_FRAMES_MIN;
+
+		return holding;
+	}
+
+	/* --------------------------- COMMAND CLASSES --------------------------- */
+
+	public class ShootPreloadedCommand extends Command {
+		/**
+		 * ShootPreloadedNoteCommand command.
+		 */
+		public ShootPreloadedCommand() {
+			timer = new Timer();
+		}
+
+		// Called when the command is initially scheduled.
+		@Override
+		public void initialize() {
+			timer.start();
+		}
+
+		// Called every time the scheduler runs while the command is scheduled.
+		@Override
+		public void execute() {
+			pivotMotor.set(pid(throughBore.getDistance(), MechConstants.SHOOTER_ENCODER_ROTATIONS));
+
+			if (timer.get() < 1 + 0.5) {
+				intakeMotor.set(0);
+				shooterLeftMotor.set(-MechConstants.SHOOTING_POWER);
+				shooterRightMotor.set(MechConstants.SHOOTING_POWER);
+			} else if (timer.get() < MechConstants.AUTO_PRELOAD_SHOOTING_TIME + 0.5) {
+				intakeMotor.set(MechConstants.OUTTAKE_POWER);
+				shooterLeftMotor.set(-MechConstants.SHOOTING_POWER);
+				shooterRightMotor.set(MechConstants.SHOOTING_POWER);
+			}
+		}
+
+		// Called once the command ends or is interrupted.
+		@Override
+		public void end(boolean interrupted) {
+			intakeMotor.set(0);
+			shooterLeftMotor.set(0);
+			shooterRightMotor.set(0);
+
+			timer.stop();
+			timer.reset();
+		}
+
+		// Returns true when the command should end.
+		@Override
+		public boolean isFinished() {
+			return timer.get() >= MechConstants.AUTO_PRELOAD_SHOOTING_TIME + 0.5;
+		}
+	}
+
+	public class ShootNoteCommand extends Command {
+		/**
+		 * ShootNoteCommand command.
+		 */
+		public ShootNoteCommand() {
+			timer = new Timer();
+		}
+
+		// Called when the command is initially scheduled.
+		@Override
+		public void initialize() {
+			timer.start();
+		}
+
+		// Called every time the scheduler runs while the command is scheduled.
+		@Override
+		public void execute() {
+			pivotMotor.set(pid(throughBore.getDistance(), MechConstants.SHOOTER_ENCODER_ROTATIONS));
+
+			if (timer.get() < MechConstants.AUTO_SHOOTING_TIME) {
+				intakeMotor.set(MechConstants.OUTTAKE_POWER);
+				shooterLeftMotor.set(0);
+				shooterRightMotor.set(0);
+			} else if (timer.get() < MechConstants.AUTO_SHOOTING_TIME + 0.5) {
+				shooterLeftMotor.set(-MechConstants.SHOOTING_POWER);
+				shooterRightMotor.set(MechConstants.SHOOTING_POWER);
+			}
+		}
+
+		// Called once the command ends or is interrupted.
+		@Override
+		public void end(boolean interrupted) {
+			intakeMotor.set(0);
+			shooterLeftMotor.set(0);
+			shooterRightMotor.set(0);
+
+			timer.stop();
+			timer.reset();
+		}
+
+		// Returns true when the command should end.
+		@Override
+		public boolean isFinished() {
+			return timer.get() >= MechConstants.AUTO_SHOOTING_TIME + 0.5;
+		}
+	}
+
+	public class IntakeNoteCommand extends Command {
+
+		// Called once the command ends or is interrupted.
+		@Override
+		public void end(boolean interrupted) {
+			setIntakeMotorPower(0);
+		}
+
+		// Returns true when the command should end.
+		@Override
+		public boolean isFinished() {
+			return handleAutoIntake();
+		}
+	}
+
+	public class PivotGroundToShooterCommand extends Command {
+		/**
+		 * PivotGroundToShooter command.
+		 */
+		public PivotGroundToShooterCommand() {
+			timer = new Timer();
+		}
+
+		// Called when the command is initially scheduled.
+		@Override
+		public void initialize() {
+			setIntakeMotorPower(MechConstants.AUTO_HOLDING_POWER);
+			timer.start();
+		}
+
+		// Called every time the scheduler runs while the command is scheduled.
+		@Override
+		public void execute() {
+			System.out.println("pgts");
+		}
+
+		// Called once the command ends or is interrupted.
+		@Override
+		public void end(boolean interrupted) {
+			setIntakeMotorPower(0);
+			timer.stop();
+			timer.reset();
+		}
+
+		// Returns true when the command should end.
+		@Override
+		public boolean isFinished() {
+			return handleAutoMoveGround() || timer.get() >= 0.25;
+		}
+	}
+
+	public class PivotShooterToGroundCommand extends Command {
+
+		/**
+		 * PivotShooterToGround command.
+		 */
+		public PivotShooterToGroundCommand() {
+			timer = new Timer();
+		}
+
+		// Called every time the scheduler runs while the command is scheduled.
+		@Override
+		public void execute() {
+			System.out.println("pstg");
+		}
+
+		// Called once the command ends or is interrupted.
+		@Override
+		public void end(boolean interrupted) {
+			timer.stop();
+			timer.reset();
+		}
+
+		// Returns true when the command should end.
+		@Override
+		public boolean isFinished() {
+			return handleAutoMoveShooter() || timer.get() >= 0.25;
+		}
+	}
+
+	public class RevShooterCommand extends Command {
+
+		// Returns true when the command should end.
+		@Override
+		public boolean isFinished() {
+			return handleAutoRev();
+		}
+		// Called once the command ends or is interrupted.
+		@Override
+		public void end(boolean interrupted) {
+			setShooterLeftMotorPower(0);
+			setShooterRightMotorPower(0);
+		}
+	}
+
 }
