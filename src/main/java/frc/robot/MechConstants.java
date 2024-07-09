@@ -8,6 +8,9 @@ public final class MechConstants {
 	public static final double AUTO_SHOOTING_TIME = 0.5;
 	public static final double AUTO_PRELOAD_SHOOTING_TIME = 1.7;
 
+	public static final float TIMED_INTAKING_DURATION = 1.5f;
+	public static final float TIMED_REVVING_DURATION = 2;
+
 	public static final float INTAKE_POWER = 0.3f; //0.4
 	public static final float AUTO_INTAKE_POWER = 0.37f;
 	public static final float OUTTAKE_POWER = -0.8f;
