@@ -61,14 +61,15 @@ public class Robot extends TimedRobot {
 		driveFSMSystem = new DriveFSMSystem();
 		mbrfsMv2 = new MBRFSMv2();
 
-		NamedCommands.registerCommand("IntakeNote", mbrfsMv2.new IntakeNoteCommand());
-		NamedCommands.registerCommand("GroundToShooter",
+		NamedCommands.registerCommand("S_TIN", mbrfsMv2.new IntakeNoteCommand());
+		NamedCommands.registerCommand("S_TON", mbrfsMv2.new OuttakeNoteCommand());
+		NamedCommands.registerCommand("S_PGS",
 			mbrfsMv2.new PivotGroundToShooterCommand());
-		NamedCommands.registerCommand("ShooterToGround",
+		NamedCommands.registerCommand("S_PSG",
 			mbrfsMv2.new PivotShooterToGroundCommand());
-		NamedCommands.registerCommand("RevShooter", mbrfsMv2.new RevShooterCommand());
-		NamedCommands.registerCommand("ShootPNote", mbrfsMv2.new ShootPreloadedCommand());
-		NamedCommands.registerCommand("ShootNote", mbrfsMv2.new ShootNoteCommand());
+		NamedCommands.registerCommand("S_TRS", mbrfsMv2.new RevShooterCommand());
+		NamedCommands.registerCommand("G_SPN", mbrfsMv2.new ShootPreloadedCommand());
+		NamedCommands.registerCommand("G_SSN", mbrfsMv2.new ShootNoteCommand());
 
 		/*
 		NamedCommands.registerCommand("S_ART", new AprilTagAlign(redSpeakerTagID,

@@ -516,6 +516,15 @@ public class MBRFSMv2 {
 	}
 
 	/**
+	 * Handles the Auto Outtake state of the MBR Mech.
+	 * @return if the action is completed
+	 */
+	public boolean handleAutoOuttake() {
+		intakeMotor.set(MechConstants.OUTTAKE_POWER);
+		return false;
+	}
+
+	/**
 	 * Checks if the intake is holding a note.
 	 * @return if the intake is holding a note
 	 */
@@ -532,17 +541,20 @@ public class MBRFSMv2 {
 	/* --------------------------- COMMAND CLASSES --------------------------- */
 
 	public class ShootPreloadedCommand extends Command {
+
+		private Timer timerSub;
+
 		/**
 		 * ShootPreloadedNoteCommand command.
 		 */
 		public ShootPreloadedCommand() {
-			timer = new Timer();
+			timerSub = new Timer();
 		}
 
 		// Called when the command is initially scheduled.
 		@Override
 		public void initialize() {
-			timer.start();
+			timerSub.start();
 		}
 
 		// Called every time the scheduler runs while the command is scheduled.
@@ -550,11 +562,11 @@ public class MBRFSMv2 {
 		public void execute() {
 			pivotMotor.set(pid(throughBore.getDistance(), MechConstants.SHOOTER_ENCODER_ROTATIONS));
 
-			if (timer.get() < 1 + 0.5) {
+			if (timerSub.get() < 1 + 0.5) {
 				intakeMotor.set(0);
 				shooterLeftMotor.set(-MechConstants.SHOOTING_POWER);
 				shooterRightMotor.set(MechConstants.SHOOTING_POWER);
-			} else if (timer.get() < MechConstants.AUTO_PRELOAD_SHOOTING_TIME + 0.5) {
+			} else if (timerSub.get() < MechConstants.AUTO_PRELOAD_SHOOTING_TIME + 0.5) {
 				intakeMotor.set(MechConstants.OUTTAKE_POWER);
 				shooterLeftMotor.set(-MechConstants.SHOOTING_POWER);
 				shooterRightMotor.set(MechConstants.SHOOTING_POWER);
@@ -568,29 +580,32 @@ public class MBRFSMv2 {
 			shooterLeftMotor.set(0);
 			shooterRightMotor.set(0);
 
-			timer.stop();
-			timer.reset();
+			timerSub.stop();
+			timerSub.reset();
 		}
 
 		// Returns true when the command should end.
 		@Override
 		public boolean isFinished() {
-			return timer.get() >= MechConstants.AUTO_PRELOAD_SHOOTING_TIME + 0.5;
+			return timerSub.get() >= MechConstants.AUTO_PRELOAD_SHOOTING_TIME + 0.5;
 		}
 	}
 
 	public class ShootNoteCommand extends Command {
+
+		private Timer timerSub;
+
 		/**
 		 * ShootNoteCommand command.
 		 */
 		public ShootNoteCommand() {
-			timer = new Timer();
+			timerSub = new Timer();
 		}
 
 		// Called when the command is initially scheduled.
 		@Override
 		public void initialize() {
-			timer.start();
+			timerSub.start();
 		}
 
 		// Called every time the scheduler runs while the command is scheduled.
@@ -598,11 +613,11 @@ public class MBRFSMv2 {
 		public void execute() {
 			pivotMotor.set(pid(throughBore.getDistance(), MechConstants.SHOOTER_ENCODER_ROTATIONS));
 
-			if (timer.get() < MechConstants.AUTO_SHOOTING_TIME) {
+			if (timerSub.get() < MechConstants.AUTO_SHOOTING_TIME) {
 				intakeMotor.set(MechConstants.OUTTAKE_POWER);
 				shooterLeftMotor.set(0);
 				shooterRightMotor.set(0);
-			} else if (timer.get() < MechConstants.AUTO_SHOOTING_TIME + 0.5) {
+			} else if (timerSub.get() < MechConstants.AUTO_SHOOTING_TIME + 0.5) {
 				shooterLeftMotor.set(-MechConstants.SHOOTING_POWER);
 				shooterRightMotor.set(MechConstants.SHOOTING_POWER);
 			}
@@ -615,14 +630,14 @@ public class MBRFSMv2 {
 			shooterLeftMotor.set(0);
 			shooterRightMotor.set(0);
 
-			timer.stop();
-			timer.reset();
+			timerSub.stop();
+			timerSub.reset();
 		}
 
 		// Returns true when the command should end.
 		@Override
 		public boolean isFinished() {
-			return timer.get() >= MechConstants.AUTO_SHOOTING_TIME + 0.5;
+			return timerSub.get() >= MechConstants.AUTO_SHOOTING_TIME + 0.5;
 		}
 	}
 
@@ -642,18 +657,21 @@ public class MBRFSMv2 {
 	}
 
 	public class PivotGroundToShooterCommand extends Command {
+
+		private Timer timerSub;
+
 		/**
 		 * PivotGroundToShooter command.
 		 */
 		public PivotGroundToShooterCommand() {
-			timer = new Timer();
+			timerSub = new Timer();
 		}
 
 		// Called when the command is initially scheduled.
 		@Override
 		public void initialize() {
 			setIntakeMotorPower(MechConstants.AUTO_HOLDING_POWER);
-			timer.start();
+			timerSub.start();
 		}
 
 		// Called every time the scheduler runs while the command is scheduled.
@@ -666,24 +684,26 @@ public class MBRFSMv2 {
 		@Override
 		public void end(boolean interrupted) {
 			setIntakeMotorPower(0);
-			timer.stop();
-			timer.reset();
+			timerSub.stop();
+			timerSub.reset();
 		}
 
 		// Returns true when the command should end.
 		@Override
 		public boolean isFinished() {
-			return handleAutoMoveGround() || timer.get() >= 0.25;
+			return handleAutoMoveGround() || timerSub.get() >= 0.25;
 		}
 	}
 
 	public class PivotShooterToGroundCommand extends Command {
 
+		private Timer timerSub;
+
 		/**
 		 * PivotShooterToGround command.
 		 */
 		public PivotShooterToGroundCommand() {
-			timer = new Timer();
+			timerSub = new Timer();
 		}
 
 		// Called every time the scheduler runs while the command is scheduled.
@@ -695,14 +715,14 @@ public class MBRFSMv2 {
 		// Called once the command ends or is interrupted.
 		@Override
 		public void end(boolean interrupted) {
-			timer.stop();
-			timer.reset();
+			timerSub.stop();
+			timerSub.reset();
 		}
 
 		// Returns true when the command should end.
 		@Override
 		public boolean isFinished() {
-			return handleAutoMoveShooter() || timer.get() >= 0.25;
+			return handleAutoMoveShooter() || timerSub.get() >= 0.25;
 		}
 	}
 
@@ -716,8 +736,41 @@ public class MBRFSMv2 {
 		// Called once the command ends or is interrupted.
 		@Override
 		public void end(boolean interrupted) {
+			//setShooterLeftMotorPower(0);
+			//setShooterRightMotorPower(0);
+		}
+	}
+
+	public class OuttakeNoteCommand extends Command {
+		private Timer timerSub;
+
+		/**
+		 * OuttakeNote command.
+		 */
+		public OuttakeNoteCommand() {
+			timerSub = new Timer();
+		}
+
+		// Called every time the scheduler runs while the command is scheduled.
+		@Override
+		public void execute() {
+			System.out.println("pstg");
+		}
+
+		// Returns true when the command should end.
+		@Override
+		public boolean isFinished() {
+			return handleAutoOuttake() || timerSub.get() >= 0.5;
+		}
+		// Called once the command ends or is interrupted.
+		@Override
+		public void end(boolean interrupted) {
+			timerSub.stop();
+			timerSub.reset();
+
 			setShooterLeftMotorPower(0);
 			setShooterRightMotorPower(0);
+			setIntakeMotorPower(0);
 		}
 	}
 
