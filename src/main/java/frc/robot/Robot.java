@@ -9,8 +9,10 @@ import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.MjpegServer;
 import edu.wpi.first.cscore.UsbCamera;
+import edu.wpi.first.cscore.VideoMode;
 import edu.wpi.first.cscore.VideoSink;
 import edu.wpi.first.cscore.VideoSource.ConnectionStrategy;
+import edu.wpi.first.util.PixelFormat;
 import edu.wpi.first.wpilibj.Encoder;
 // WPILib Imports
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -88,8 +90,10 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData("Field", mField);
 
 		driverCam = CameraServer.startAutomaticCapture(0);
+		VideoMode videoMode = new VideoMode(PixelFormat.kMJPEG,256,144,30);
+		driverCam.setVideoMode(videoMode);
 		driverCam.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
-		driverCam.setResolution(streamWidth, streamHeight);
+		//driverCam.setResolution(streamWidth, streamHeight);
 
 		//Label all named commands here
 	}

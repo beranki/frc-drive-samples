@@ -524,6 +524,7 @@ public class MBRFSMv2 {
 	 */
 	public boolean handleAutoOuttake() {
 		intakeMotor.set(MechConstants.OUTTAKE_POWER);
+		pivotMotor.set(0);
 		return false;
 	}
 
@@ -694,7 +695,7 @@ public class MBRFSMv2 {
 		@Override
 		public void execute() {
 			handleAutoMoveShooter();
-			System.out.println("pgts");
+			System.out.println("TO SHOOTING");
 		}
 
 		// Called once the command ends or is interrupted.
@@ -703,12 +704,13 @@ public class MBRFSMv2 {
 			setIntakeMotorPower(0);
 			timerSub.stop();
 			timerSub.reset();
+			System.out.println("AT SHOOTING");
 		}
 
 		// Returns true when the command should end.
 		@Override
 		public boolean isFinished() {
-			return handleAutoMoveShooter() || timerSub.get() >= 0.25;
+			return handleAutoMoveShooter() || timerSub.get() >= 1;
 		}
 	}
 
@@ -740,7 +742,7 @@ public class MBRFSMv2 {
 		// Returns true when the command should end.
 		@Override
 		public boolean isFinished() {
-			return handleAutoMoveGround() || timerSub.get() >= 0.25;
+			return handleAutoMoveGround() || timerSub.get() >= 1;
 		}
 	}
 
@@ -769,10 +771,17 @@ public class MBRFSMv2 {
 			timerSub = new Timer();
 		}
 
+		// Called when the command is initially scheduled.
+		@Override
+		public void initialize() {
+			timerSub.start();
+		}
+
 		// Called every time the scheduler runs while the command is scheduled.
 		@Override
 		public void execute() {
-			System.out.println("pstg");
+			handleAutoOuttake();
+			System.out.println("OUTTAKING" + timerSub.get());
 		}
 
 		// Returns true when the command should end.
