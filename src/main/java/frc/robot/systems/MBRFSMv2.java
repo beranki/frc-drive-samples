@@ -364,16 +364,15 @@ public class MBRFSMv2 {
 		pivotMotor.set(pid(throughBore.getDistance(), MechConstants.GROUND_ENCODER_ROTATIONS));
 		shooterLeftMotor.set(0);
 		shooterRightMotor.set(0);
-		if (input.isIntakeButtonPressed() && !holding) {
+		if (input.isIntakeButtonPressed() && !holding && !input.isManualIntakeButtonPressed()) {
 			intakeMotor.set(0.2);
 		} else if (!input.isManualIntakeButtonPressed() && !input.isManualOuttakeButtonPressed()) {
 			intakeMotor.set(0);
-		} else if (input.isManualIntakeButtonPressed() && !input.isManualOuttakeButtonPressed()
-			) {
+		} else if (input.isManualIntakeButtonPressed() && !input.isManualOuttakeButtonPressed()) {
 			intakeMotor.set(0.2);
 		} else if (input.isManualOuttakeButtonPressed() && !input.isManualIntakeButtonPressed()) {
 			intakeMotor.set(-0.2);
-		} 
+		}
 	}
 
 	/**
