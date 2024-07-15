@@ -132,19 +132,19 @@ public class MBRFSMv2 {
 		}
 		avgcone /= MechConstants.AVERAGE_SIZE;
 
-		SmartDashboard.putNumber("avg current", avgcone);
+		//SmartDashboard.putNumber("avg current", avgcone);
 		SmartDashboard.putBoolean("holding", holding);
 		SmartDashboard.putString("TeleOP STATE", currentState.toString());
-		SmartDashboard.putBoolean("Input button pressed", input.isIntakeButtonPressed());
+		//SmartDashboard.putBoolean("Input button pressed", input.isIntakeButtonPressed());
 		SmartDashboard.putNumber("CurrentNoteFrames", noteColorFrames);
 		SmartDashboard.putString("Current State", getCurrentState().toString());
 		SmartDashboard.putNumber("CurrentIntakeMotor", intakeMotor.get());
 		SmartDashboard.putNumber("Intake power", intakeMotor.get());
 		SmartDashboard.putNumber("Pivot power", pivotMotor.get());
-		SmartDashboard.putNumber("Left shooter power", shooterLeftMotor.get());
-		SmartDashboard.putNumber("Right shooter power", shooterRightMotor.get());
+		//SmartDashboard.putNumber("Left shooter power", shooterLeftMotor.get());
+		//SmartDashboard.putNumber("Right shooter power", shooterRightMotor.get());
 		SmartDashboard.putNumber("Pivot encoder count", throughBore.getDistance());
-		SmartDashboard.putNumber("Proximity", colorSensor.getProximity());
+		//SmartDashboard.putNumber("Proximity", colorSensor.getProximity());
 		SmartDashboard.putBoolean("HASNOTE --- ", hasNote());
 
 		switch (currentState) {
@@ -646,7 +646,7 @@ public class MBRFSMv2 {
 	}
 
 	public class IntakeNoteCommand extends Command {
-		
+
 		Timer timerSub;
 
 		public IntakeNoteCommand() {
@@ -669,7 +669,7 @@ public class MBRFSMv2 {
 		// Returns true when the command should end.
 		@Override
 		public boolean isFinished() {
-			return handleAutoIntake() || timerSub.get() > 0.25;
+			return handleAutoIntake() || timerSub.get() > 0.5;
 		}
 	}
 
@@ -688,14 +688,14 @@ public class MBRFSMv2 {
 		@Override
 		public void initialize() {
 			setIntakeMotorPower(MechConstants.AUTO_HOLDING_POWER);
-			timerSub.start();
 		}
 
 		// Called every time the scheduler runs while the command is scheduled.
 		@Override
 		public void execute() {
-			handleAutoMoveShooter();
-			System.out.println("TO SHOOTING");
+			if (handleAutoMoveShooter()) {
+				timerSub.start();
+			}
 		}
 
 		// Called once the command ends or is interrupted.
@@ -704,13 +704,12 @@ public class MBRFSMv2 {
 			setIntakeMotorPower(0);
 			timerSub.stop();
 			timerSub.reset();
-			System.out.println("AT SHOOTING");
 		}
 
 		// Returns true when the command should end.
 		@Override
 		public boolean isFinished() {
-			return handleAutoMoveShooter() || timerSub.get() >= 1;
+			return handleAutoMoveShooter() && timerSub.get() > 0.5;
 		}
 	}
 
@@ -728,7 +727,10 @@ public class MBRFSMv2 {
 		// Called every time the scheduler runs while the command is scheduled.
 		@Override
 		public void execute() {
-			handleAutoMoveGround();
+			if (handleAutoMoveGround()) {
+				timerSub.start();
+			}
+
 			System.out.println("pstg");
 		}
 
@@ -742,7 +744,7 @@ public class MBRFSMv2 {
 		// Returns true when the command should end.
 		@Override
 		public boolean isFinished() {
-			return handleAutoMoveGround() || timerSub.get() >= 1;
+			return handleAutoMoveGround() && timerSub.get() > 0.5;
 		}
 	}
 

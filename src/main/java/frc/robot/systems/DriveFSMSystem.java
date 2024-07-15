@@ -296,10 +296,10 @@ public class DriveFSMSystem extends SubsystemBase {
 				&& rpi.getAprilTagZInv(VisionConstants.RED_SPEAKER_TAG_ID)
 				== VisionConstants.UNABLE_TO_SEE_TAG_CONSTANT)) {
 				//led.greenLight();
-				SmartDashboard.putBoolean("Can see tag", true);
+				//SmartDashboard.putBoolean("Can see tag", true);
 			} else {
 				//led.orangeLight();
-				SmartDashboard.putBoolean("Can see tag", false);
+				//SmartDashboard.putBoolean("Can see tag", false);
 			}
 		} else {
 			if (!(rpi.getAprilTagZInv(VisionConstants.BLUE_SOURCE_TAG1_ID)
@@ -309,19 +309,19 @@ public class DriveFSMSystem extends SubsystemBase {
 				&& rpi.getAprilTagZInv(VisionConstants.BLUE_SPEAKER_TAG_ID)
 				== VisionConstants.UNABLE_TO_SEE_TAG_CONSTANT)) {
 				//led.greenLight();
-				SmartDashboard.putBoolean("Can see tag", true);
+				//SmartDashboard.putBoolean("Can see tag", true);
 			} else {
 				//led.orangeLight();
-				SmartDashboard.putBoolean("Can see tag", false);
+				//SmartDashboard.putBoolean("Can see tag", false);
 			}
 		}
 
 		SmartDashboard.putString("Drive State", getCurrentState().toString());
-		SmartDashboard.putBoolean("Is Speaker Aligned", isSpeakerAligned);
+		//SmartDashboard.putBoolean("Is Speaker Aligned", isSpeakerAligned);
 
-		SmartDashboard.putNumber("X Pos", getPose().getX());
-		SmartDashboard.putNumber("Y Pos", getPose().getY());
-		SmartDashboard.putNumber("Heading", getPose().getRotation().getDegrees());
+		//SmartDashboard.putNumber("X Pos", getPose().getX());
+		//SmartDashboard.putNumber("Y Pos", getPose().getY());
+		//SmartDashboard.putNumber("Heading", getPose().getRotation().getDegrees());
 
 		/*
 		SmartDashboard.putNumber("Gyro Angle", gyro.getAngle());
@@ -329,7 +329,7 @@ public class DriveFSMSystem extends SubsystemBase {
 		SmartDashboard.putNumber("Gyro Fused Heading", gyro.getFusedHeading());
 		*/
 
-		SmartDashboard.putNumber("x feed", -MathUtil.applyDeadband((
+		/*SmartDashboard.putNumber("x feed", -MathUtil.applyDeadband((
 			input.getControllerLeftJoystickY()
 					* Math.abs(input.getControllerLeftJoystickY()) * ((input.getLeftTrigger() / 2)
 					+ DriveConstants.LEFT_TRIGGER_DRIVE_CONSTANT) / 2),
@@ -378,7 +378,7 @@ public class DriveFSMSystem extends SubsystemBase {
 					/ DriveConstants.ANGULAR_SPEED_LIMIT_CONSTANT), OIConstants.DRIVE_DEADBAND),
 					true);
 
-				if (input.isBackButtonPressed()) {
+				if (input.isCrossButtonPressed()) {
 					gyro.reset();
 				}
 
@@ -386,7 +386,7 @@ public class DriveFSMSystem extends SubsystemBase {
 					setForwardFormation();
 				}
 
-				if (input.isOptionsButtonPressed()) {
+				if (input.isCircleButtonPressed()) {
 					setXFormation();
 				}
 
@@ -500,9 +500,9 @@ public class DriveFSMSystem extends SubsystemBase {
 		double ySpeedDelivered = ySpeed * DriveConstants.MAX_SPEED_METERS_PER_SECOND;
 		double rotDelivered = rot * DriveConstants.MAX_ANGULAR_SPEED;
 
-		SmartDashboard.putNumber("x speed delivered", xSpeedDelivered);
-		SmartDashboard.putNumber("y speed delivered", ySpeedDelivered);
-		SmartDashboard.putNumber("rot speed delivered", rotDelivered);
+		//SmartDashboard.putNumber("x speed delivered", xSpeedDelivered);
+		//SmartDashboard.putNumber("y speed delivered", ySpeedDelivered);
+		//SmartDashboard.putNumber("rot speed delivered", rotDelivered);
 
 
 		var swerveModuleStates = DriveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(
@@ -511,7 +511,7 @@ public class DriveFSMSystem extends SubsystemBase {
 					rotDelivered, Rotation2d.fromDegrees(getHeading()))
 				: new ChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered));
 
-		SmartDashboard.putNumber("s0d", swerveModuleStates[0].speedMetersPerSecond);
+		/*SmartDashboard.putNumber("s0d", swerveModuleStates[0].speedMetersPerSecond);
 		SmartDashboard.putNumber("s1d", swerveModuleStates[1].speedMetersPerSecond);
 		SmartDashboard.putNumber("s2d", swerveModuleStates[2].speedMetersPerSecond);
 		SmartDashboard.putNumber("s3d", swerveModuleStates[(2 + 1)].speedMetersPerSecond);
@@ -519,7 +519,7 @@ public class DriveFSMSystem extends SubsystemBase {
 		SmartDashboard.putNumber("s0t", swerveModuleStates[0].angle.getRadians());
 		SmartDashboard.putNumber("s1t", swerveModuleStates[1].angle.getRadians());
 		SmartDashboard.putNumber("s2t", swerveModuleStates[2].angle.getRadians());
-		SmartDashboard.putNumber("s3t", swerveModuleStates[(2 + 1)].angle.getRadians());
+		SmartDashboard.putNumber("s3t", swerveModuleStates[(2 + 1)].angle.getRadians());*/
 
 		SwerveDriveKinematics.desaturateWheelSpeeds(
 			swerveModuleStates, DriveConstants.MAX_SPEED_METERS_PER_SECOND);
@@ -529,10 +529,10 @@ public class DriveFSMSystem extends SubsystemBase {
 		rearLeft.setDesiredState(swerveModuleStates[2]);
 		rearRight.setDesiredState(swerveModuleStates[(2 + 1)]);
 
-		System.out.println("S1" + swerveModuleStates[0]);
-		System.out.println("S2" + swerveModuleStates[1]);
-		System.out.println("S3" + swerveModuleStates[2]);
-		System.out.println("S4" + swerveModuleStates[(2 + 1)]);
+		//System.out.println("S1" + swerveModuleStates[0]);
+		//System.out.println("S2" + swerveModuleStates[1]);
+		//System.out.println("S3" + swerveModuleStates[2]);
+		//System.out.println("S4" + swerveModuleStates[(2 + 1)]);
 	}
 
 
@@ -661,7 +661,7 @@ public class DriveFSMSystem extends SubsystemBase {
 			VisionConstants.MAX_ANGULAR_SPEED_RADIANS_PER_SECOND) : 0;
 
 		//System.out.println(aSpeed);
-		SmartDashboard.putNumber("yaw", rpi.getNoteYaw());
+		//SmartDashboard.putNumber("yaw", rpi.getNoteYaw());
 
 		if (!isNoteAligned) {
 			drive(0, ySpeed, aSpeed, false);
