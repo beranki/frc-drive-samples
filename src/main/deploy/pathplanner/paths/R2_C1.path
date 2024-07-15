@@ -3,106 +3,53 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3429797933242715,
-        "y": 5.550562440965166
+        "x": 15.187212914676275,
+        "y": 5.580559282764361
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.76646707444663,
-        "y": 5.550562440965166
+        "x": 13.909558552569699,
+        "y": 7.019756150424644
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.043354753967716,
-        "y": 4.346961967626977
+        "x": 13.95361559953889,
+        "y": 7.093184562039965
       },
       "prevControl": {
-        "x": 4.128894125409003,
-        "y": 5.609930647410491
+        "x": 13.891055114604878,
+        "y": 7.179205228824232
       },
       "nextControl": {
-        "x": 5.569981482143623,
-        "y": 3.6196337012681226
+        "x": 14.071101058123404,
+        "y": 6.93164205648626
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.607394096775772,
-        "y": 4.028164081172883
+        "x": 15.187212914676275,
+        "y": 5.580559282764361
       },
       "prevControl": {
-        "x": 8.10616571402652,
-        "y": 4.071528411412859
-      },
-      "nextControl": {
-        "x": 7.05134490769876,
-        "y": 3.979819909550374
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 5.043354753967716,
-        "y": 4.346961967626977
-      },
-      "prevControl": {
-        "x": 5.559632942327455,
-        "y": 3.6422172641782513
-      },
-      "nextControl": {
-        "x": 4.128894125409003,
-        "y": 5.595244965087426
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 1.3429797933242715,
-        "y": 5.550562440965166
-      },
-      "prevControl": {
-        "x": 1.7875549188770532,
-        "y": 5.550562440965166
+        "x": 13.894872870246635,
+        "y": 7.034441832747708
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.7,
-      "rotationDegrees": -40.77128355888105,
-      "rotateFast": false
-    },
-    {
-      "waypointRelativePos": 1.55,
-      "rotationDegrees": 7.297844560640017,
-      "rotateFast": false
-    },
-    {
-      "waypointRelativePos": 2.3,
-      "rotationDegrees": 4.882692482732115,
-      "rotateFast": false
-    },
-    {
-      "waypointRelativePos": 3.3,
-      "rotationDegrees": -40.932931467093674,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 1.3,
+      "waypointRelativePos": 0.05,
       "command": {
         "type": "sequential",
         "data": {
@@ -119,7 +66,7 @@
     },
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 1.55,
+      "waypointRelativePos": 0.25,
       "command": {
         "type": "sequential",
         "data": {
@@ -136,24 +83,7 @@
     },
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 3.35,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "S_TRS"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "New Event Marker",
-      "waypointRelativePos": 2.0,
+      "waypointRelativePos": 0,
       "command": {
         "type": "sequential",
         "data": {
@@ -162,6 +92,23 @@
               "type": "named",
               "data": {
                 "name": "S_PGS"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 1.8,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "S_TRS"
               }
             }
           ]
