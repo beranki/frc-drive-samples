@@ -3,41 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7,
-        "y": 4.35
+        "x": 0.7071301441350655,
+        "y": 6.726042503963363
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.9260417769493865,
-        "y": 3.2749071580432965
+        "x": 2.9017991665157132,
+        "y": 7.655697015028954
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.5868974814872714,
-        "y": 6.770099550932555
+        "x": 7.7239413396376815,
+        "y": 5.94390938559744
       },
       "prevControl": {
-        "x": 2.733754304717912,
-        "y": 6.726042503963362
+        "x": 7.40420287545762,
+        "y": 6.0270413862853385
       },
       "nextControl": {
-        "x": 2.4181014909420093,
-        "y": 6.820738348096134
+        "x": 8.088151473566288,
+        "y": 5.849214750774771
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 0.7,
-        "y": 4.35
+        "x": 0.7071301441350655,
+        "y": 6.726042503963363
       },
       "prevControl": {
-        "x": 1.9407274592724506,
-        "y": 3.260221475720233
+        "x": 3.0110622066921935,
+        "y": 7.692118028421114
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,13 +46,13 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.45,
-      "rotationDegrees": 60.0,
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": -13.687422656595185,
       "rotateFast": false
     },
     {
-      "waypointRelativePos": 1.55,
-      "rotationDegrees": 60.201297697792675,
+      "waypointRelativePos": 1.35,
+      "rotationDegrees": -13.059416198466995,
       "rotateFast": false
     }
   ],
@@ -60,7 +60,7 @@
   "eventMarkers": [
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 0.25,
+      "waypointRelativePos": 0.6,
       "command": {
         "type": "sequential",
         "data": {
@@ -77,7 +77,7 @@
     },
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 0.5,
+      "waypointRelativePos": 0.85,
       "command": {
         "type": "parallel",
         "data": {
@@ -111,7 +111,7 @@
     },
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 1.2,
+      "waypointRelativePos": 1.55,
       "command": {
         "type": "parallel",
         "data": {
@@ -135,13 +135,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -60.0,
+    "rotation": 60.0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": -60.0,
+    "rotation": 60.0,
     "velocity": 0
   },
   "useDefaultConstraints": true

@@ -24,7 +24,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "R2_C1"
+                  "pathName": null
                 }
               },
               {
@@ -43,7 +43,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "R2_C2"
+                  "pathName": null
                 }
               },
               {
@@ -62,7 +62,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "R2_C3"
+                  "pathName": null
                 }
               },
               {
