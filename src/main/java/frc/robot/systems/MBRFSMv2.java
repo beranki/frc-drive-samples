@@ -566,7 +566,7 @@ public class MBRFSMv2 {
 		public void execute() {
 			pivotMotor.set(pid(throughBore.getDistance(), MechConstants.SHOOTER_ENCODER_ROTATIONS));
 
-			if (timerSub.get() < 1 + 0.5) {
+			if (timerSub.get() < 0.8 + 0.5) {
 				intakeMotor.set(0);
 				shooterLeftMotor.set(-MechConstants.SHOOTING_POWER);
 				shooterRightMotor.set(MechConstants.SHOOTING_POWER);
@@ -800,6 +800,7 @@ public class MBRFSMv2 {
 			setShooterLeftMotorPower(0);
 			setShooterRightMotorPower(0);
 			setIntakeMotorPower(0);
+			holding = false;
 		}
 	}
 

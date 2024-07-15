@@ -16,28 +16,28 @@
     },
     {
       "anchor": {
-        "x": 7.709372934273819,
-        "y": 7.306055286467272
+        "x": 7.947171529405671,
+        "y": 7.607183443347209
       },
       "prevControl": {
-        "x": 8.17556190569347,
-        "y": 7.451739340035911
+        "x": 8.41336050082532,
+        "y": 7.752867496915849
       },
       "nextControl": {
-        "x": 7.232132945256308,
-        "y": 7.1569177898993
+        "x": 7.469931540388161,
+        "y": 7.458045946779237
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.3429797933242715,
+        "x": 0.7,
         "y": 5.550562440965166
       },
       "prevControl": {
-        "x": 1.7873161567086222,
-        "y": 5.56513084632203
+        "x": 2.48363468144044,
+        "y": 5.550562440965166
       },
       "nextControl": null,
       "isLocked": false,
@@ -47,12 +47,12 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.3,
-      "rotationDegrees": 12.411644817263708,
+      "rotationDegrees": -167.59,
       "rotateFast": false
     },
     {
       "waypointRelativePos": 1.65,
-      "rotationDegrees": 12.4805936188277,
+      "rotationDegrees": -167.52,
       "rotateFast": false
     }
   ],
@@ -60,7 +60,7 @@
   "eventMarkers": [
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 0.55,
+      "waypointRelativePos": 0.35,
       "command": {
         "type": "sequential",
         "data": {
@@ -77,7 +77,7 @@
     },
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 0.75,
+      "waypointRelativePos": 0.7,
       "command": {
         "type": "sequential",
         "data": {
@@ -94,7 +94,7 @@
     },
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 1.55,
+      "waypointRelativePos": 1.5,
       "command": {
         "type": "sequential",
         "data": {
@@ -111,7 +111,7 @@
     },
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 1.0,
+      "waypointRelativePos": 1.45,
       "command": {
         "type": "sequential",
         "data": {
@@ -135,14 +135,14 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": 180.0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": 180.0,
     "velocity": 0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }
