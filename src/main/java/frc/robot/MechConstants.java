@@ -20,10 +20,10 @@ public final class MechConstants {
 	public static final float CURRENT_THRESHOLD = 11.0f;
 	public static final int NOTE_FRAMES_MIN = 3;
 
-	public static final double MIN_TURN_SPEED = -0.5;
-	public static final double MAX_TURN_SPEED = 0.5;
-	public static final double MIN_TURN_SPEED_AUTO = -0.4;
-	public static final double MAX_TURN_SPEED_AUTO = 0.4;
+	public static final double MIN_TURN_SPEED = -0.6;
+	public static final double MAX_TURN_SPEED = 0.6;
+	public static final double MIN_TURN_SPEED_AUTO = -0.6;
+	public static final double MAX_TURN_SPEED_AUTO = 0.6;
 	public static final double PID_CONSTANT_PIVOT_P = 0.00075;
 	public static final double PID_CONSTANT_PIVOT_P_AUTO = 0.001;
 

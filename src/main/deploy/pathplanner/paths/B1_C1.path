@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.1222124198394874,
-        "y": 7.053948901459001
+        "x": 1.0155257547251928,
+        "y": 6.784812491423988
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.484097705225823,
-        "y": 6.975699103455452
+        "x": 2.3666122466413095,
+        "y": 7.034441832747708
       },
       "prevControl": {
-        "x": 2.484097705225823,
-        "y": 6.908781685683923
+        "x": 2.3170713083830003,
+        "y": 7.027681992772798
       },
       "nextControl": {
-        "x": 2.484097705225823,
-        "y": 7.0426165212269805
+        "x": 2.4161531848996183,
+        "y": 7.041201672722619
       },
       "isLocked": false,
       "linkedName": null
@@ -36,8 +36,8 @@
         "y": 6.740728186286426
       },
       "prevControl": {
-        "x": 1.1003598118041897,
-        "y": 7.083085712172729
+        "x": 1.0008437905963476,
+        "y": 6.784785233255618
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,8 +46,13 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.85,
-      "rotationDegrees": 0,
+      "waypointRelativePos": 1.05,
+      "rotationDegrees": -172.23,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": -172.23,
       "rotateFast": false
     }
   ],
@@ -55,7 +60,7 @@
   "eventMarkers": [
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 0.1,
+      "waypointRelativePos": 0.2,
       "command": {
         "type": "sequential",
         "data": {
@@ -72,7 +77,7 @@
     },
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 0.4,
+      "waypointRelativePos": 0.5,
       "command": {
         "type": "sequential",
         "data": {
@@ -106,7 +111,7 @@
     },
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 1.5,
+      "waypointRelativePos": 1.55,
       "command": {
         "type": "sequential",
         "data": {
@@ -130,13 +135,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 60.0,
+    "rotation": -120.0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": 60.0,
+    "rotation": -120.0,
     "velocity": 0
   },
   "useDefaultConstraints": true

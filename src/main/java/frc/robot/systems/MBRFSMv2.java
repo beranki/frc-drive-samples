@@ -43,7 +43,7 @@ public class MBRFSMv2 {
 	private TalonFX intakeMotor;
 	private TalonFX pivotMotor;
 	private final ColorSensorV3 colorSensor;
-	//private LED led = new LED();
+	private LED led = new LED();
 
 	// Hardware devices should be owned by one and only one system. They must
 	// be private to their owner system and may not be used elsewhere.
@@ -100,7 +100,7 @@ public class MBRFSMv2 {
 	 * Ex. if the robot is enabled, disabled, then reenabled.
 	 */
 	public void reset() {
-		//ledled.greenLight(false);
+		led.greenLight(false);
 		currentState = MBRFSMState.MOVE_TO_SHOOTER;
 		holding = false;
 
@@ -320,7 +320,12 @@ public class MBRFSMv2 {
 	 * @param input
 	 */
 	public void handleMoveShooterState(TeleopInput input) {
-		//led.greenLight(false);
+		if (!holding) {
+			led.blueLight();
+		} else {
+			led.greenLight(true);
+		}
+
 		pivotMotor.set(pid(throughBore.getDistance(), MechConstants.SHOOTER_ENCODER_ROTATIONS));
 		shooterLeftMotor.set(0);
 		shooterRightMotor.set(0);
@@ -340,7 +345,7 @@ public class MBRFSMv2 {
 	 *        the robot is in autonomous mode.
 	 */
 	public void handleMoveGroundState(TeleopInput input) {
-	//	led.greenLight(true);
+		led.pinkLight();
 		pivotMotor.set(pid(throughBore.getDistance(), MechConstants.GROUND_ENCODER_ROTATIONS));
 		shooterLeftMotor.set(0);
 		shooterRightMotor.set(0);
@@ -360,7 +365,12 @@ public class MBRFSMv2 {
 	 *        the robot is in autonomous mode.
 	 */
 	public void handleIntakingState(TeleopInput input) {
-		//led.greenLight(true);
+		if (!holding) {
+			led.greenLight(false);
+		} else {
+			led.greenLight(true);
+		}
+
 		pivotMotor.set(pid(throughBore.getDistance(), MechConstants.GROUND_ENCODER_ROTATIONS));
 		shooterLeftMotor.set(0);
 		shooterRightMotor.set(0);
@@ -381,7 +391,8 @@ public class MBRFSMv2 {
 	 *        the robot is in autonomous mode.
 	 */
 	public void handleShootingState(TeleopInput input) {
-		//led.greenLight(false);
+		led.orangeLight(false);
+
 		pivotMotor.set(pid(throughBore.getDistance(), MechConstants.SHOOTER_ENCODER_ROTATIONS));
 		if (input.isRevButtonPressed() && !input.isShootButtonPressed()) {
 			shooterLeftMotor.set(-MechConstants.SHOOTING_POWER);
@@ -669,7 +680,7 @@ public class MBRFSMv2 {
 		// Returns true when the command should end.
 		@Override
 		public boolean isFinished() {
-			return handleAutoIntake() || timerSub.get() > 0.5;
+			return handleAutoIntake();
 		}
 	}
 
@@ -789,7 +800,7 @@ public class MBRFSMv2 {
 		// Returns true when the command should end.
 		@Override
 		public boolean isFinished() {
-			return handleAutoOuttake() || timerSub.get() >= 0.5;
+			return handleAutoOuttake() || timerSub.get() >= 0.7;
 		}
 		// Called once the command ends or is interrupted.
 		@Override
