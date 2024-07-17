@@ -100,7 +100,7 @@ public class MBRFSMv2 {
 	 * Ex. if the robot is enabled, disabled, then reenabled.
 	 */
 	public void reset() {
-		led.greenLight(false);
+		led.purpleLight();
 		currentState = MBRFSMState.MOVE_TO_SHOOTER;
 		holding = false;
 
