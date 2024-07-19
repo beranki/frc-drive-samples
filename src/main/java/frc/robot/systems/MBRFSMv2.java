@@ -323,7 +323,7 @@ public class MBRFSMv2 {
 		if (!holding) {
 			led.blueLight();
 		} else {
-			led.greenLight(true);
+			led.rainbow();
 		}
 
 		pivotMotor.set(pid(throughBore.getDistance(), MechConstants.SHOOTER_ENCODER_ROTATIONS));
@@ -345,7 +345,7 @@ public class MBRFSMv2 {
 	 *        the robot is in autonomous mode.
 	 */
 	public void handleMoveGroundState(TeleopInput input) {
-		led.pinkLight();
+		led.orangeLight(false);
 		pivotMotor.set(pid(throughBore.getDistance(), MechConstants.GROUND_ENCODER_ROTATIONS));
 		shooterLeftMotor.set(0);
 		shooterRightMotor.set(0);
@@ -366,9 +366,9 @@ public class MBRFSMv2 {
 	 */
 	public void handleIntakingState(TeleopInput input) {
 		if (!holding) {
-			led.greenLight(false);
+			led.orangeLight(false);
 		} else {
-			led.greenLight(true);
+			led.rainbow();
 		}
 
 		pivotMotor.set(pid(throughBore.getDistance(), MechConstants.GROUND_ENCODER_ROTATIONS));
@@ -391,7 +391,7 @@ public class MBRFSMv2 {
 	 *        the robot is in autonomous mode.
 	 */
 	public void handleShootingState(TeleopInput input) {
-		led.orangeLight(false);
+		led.blueLight();
 
 		pivotMotor.set(pid(throughBore.getDistance(), MechConstants.SHOOTER_ENCODER_ROTATIONS));
 		if (input.isRevButtonPressed() && !input.isShootButtonPressed()) {
@@ -441,6 +441,7 @@ public class MBRFSMv2 {
 	 * @return if the pivot is at the correct position
 	 */
 	public boolean handleAutoMoveGround() {
+		led.orangeLight(false);
 		pivotMotor.set(pidAuto(throughBore.getDistance(), MechConstants.GROUND_ENCODER_ROTATIONS));
 		return inRange(throughBore.getDistance(), MechConstants.GROUND_ENCODER_ROTATIONS);
 	}
@@ -450,6 +451,12 @@ public class MBRFSMv2 {
 	 * @return if the pivot is at the correct position
 	 */
 	public boolean handleAutoMoveShooter() {
+		if (holding) {
+			led.rainbow();
+		} else {
+			led.orangeLight(false);
+		}
+
 		intakeMotor.set(MechConstants.AUTO_HOLDING_POWER);
 		pivotMotor.set(pidAuto(throughBore.getDistance(), MechConstants.SHOOTER_ENCODER_ROTATIONS));
 		return inRange(throughBore.getDistance(), MechConstants.SHOOTER_ENCODER_ROTATIONS);
@@ -460,6 +467,11 @@ public class MBRFSMv2 {
 	 * @return if the action is completed
 	 */
 	public boolean handleAutoRev() {
+		if (holding) {
+			led.rainbow();
+		} else {
+			led.orangeLight(false);
+		}
 		shooterLeftMotor.set(-MechConstants.SHOOTING_POWER);
 		shooterRightMotor.set(MechConstants.SHOOTING_POWER);
 		return true;
@@ -575,6 +587,7 @@ public class MBRFSMv2 {
 		// Called every time the scheduler runs while the command is scheduled.
 		@Override
 		public void execute() {
+			led.rainbow();
 			pivotMotor.set(pid(throughBore.getDistance(), MechConstants.SHOOTER_ENCODER_ROTATIONS));
 
 			if (timerSub.get() < 0.8 + 0.5) {
@@ -667,6 +680,7 @@ public class MBRFSMv2 {
 		// Called when the command is initially scheduled.
 		@Override
 		public void initialize() {
+			led.orangeLight(false);
 			timerSub.start();
 		}
 		// Called once the command ends or is interrupted.
@@ -704,6 +718,10 @@ public class MBRFSMv2 {
 		// Called every time the scheduler runs while the command is scheduled.
 		@Override
 		public void execute() {
+			if (holding) {
+				led.rainbow();
+			}
+
 			if (handleAutoMoveShooter()) {
 				timerSub.start();
 			}
@@ -738,6 +756,7 @@ public class MBRFSMv2 {
 		// Called every time the scheduler runs while the command is scheduled.
 		@Override
 		public void execute() {
+			led.orangeLight(false);
 			if (handleAutoMoveGround()) {
 				timerSub.start();
 			}
@@ -787,6 +806,7 @@ public class MBRFSMv2 {
 		// Called when the command is initially scheduled.
 		@Override
 		public void initialize() {
+			led.blueLight();
 			timerSub.start();
 		}
 
