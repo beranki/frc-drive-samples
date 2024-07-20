@@ -79,27 +79,27 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.7,
-      "rotationDegrees": -22.011099861228985,
+      "rotationDegrees": 154.31282470442005,
       "rotateFast": false
     },
     {
       "waypointRelativePos": 1.55,
-      "rotationDegrees": -9.397287220418546,
+      "rotationDegrees": 169.28641665105502,
       "rotateFast": false
     },
     {
       "waypointRelativePos": 2.3,
-      "rotationDegrees": -8.017478037016804,
+      "rotationDegrees": 168.6121567019838,
       "rotateFast": false
     },
     {
       "waypointRelativePos": 3.3,
-      "rotationDegrees": -25.507090707335045,
+      "rotationDegrees": 154.76083209578783,
       "rotateFast": false
     },
     {
       "waypointRelativePos": 2.0,
-      "rotationDegrees": -7.0,
+      "rotationDegrees": 169.3803447238449,
       "rotateFast": false
     }
   ],
@@ -182,13 +182,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": 179.65895772114112,
     "rotateFast": false
   },
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": 180.0,
     "velocity": 0
   },
   "useDefaultConstraints": true
