@@ -14,23 +14,25 @@ public final class MechConstants {
 	public static final float INTAKE_POWER = 0.3f; //0.4
 	public static final float AUTO_INTAKE_POWER = 0.3f;
 	public static final float OUTTAKE_POWER = -0.8f;
+	public static final float MANUAL_INTAKE_POWER = 0.4f;
+	public static final float MANUAL_OUTTAKE_POWER = -0.4f;
 	public static final float TELE_HOLDING_POWER = 0.0f;
 	public static final float AUTO_HOLDING_POWER = 0.05f;
 	public static final int AVERAGE_SIZE = 7;
 	public static final float CURRENT_THRESHOLD = 11.0f;
 	public static final int NOTE_FRAMES_MIN = 3;
 
-	public static final double MIN_TURN_SPEED = -0.6;
-	public static final double MAX_TURN_SPEED = 0.6;
-	public static final double MIN_TURN_SPEED_AUTO = -0.6;
-	public static final double MAX_TURN_SPEED_AUTO = 0.6;
+	public static final double MIN_TURN_SPEED = -0.4;
+	public static final double MAX_TURN_SPEED = 0.4;
+	public static final double MIN_TURN_SPEED_AUTO = -0.5;
+	public static final double MAX_TURN_SPEED_AUTO = 0.5;
 	public static final double PID_CONSTANT_PIVOT_P = 0.00075;
 	public static final double PID_CONSTANT_PIVOT_P_AUTO = 0.001;
 
 	public static final double GROUND_ENCODER_ROTATIONS = -1200;
 	public static final double AMP_ENCODER_ROTATIONS = -525;
 	public static final double SHOOTER_ENCODER_ROTATIONS = 0;
-	public static final double INRANGE_VALUE = 20;
+	public static final double INRANGE_VALUE = 30;
 
 	public static final double PROXIMIIY_THRESHOLD = 200;
 	public static final double GREEN_LOW = 0.18;

@@ -332,9 +332,9 @@ public class MBRFSMv2 {
 		if (!input.isManualIntakeButtonPressed() && !input.isManualOuttakeButtonPressed()) {
 			intakeMotor.set(0);
 		} else if (input.isManualIntakeButtonPressed() && !input.isManualOuttakeButtonPressed()) {
-			intakeMotor.set(0.2);
+			intakeMotor.set(MechConstants.MANUAL_INTAKE_POWER);
 		} else if (input.isManualOuttakeButtonPressed() && !input.isManualIntakeButtonPressed()) {
-			intakeMotor.set(-0.2);
+			intakeMotor.set(MechConstants.MANUAL_OUTTAKE_POWER);
 			holding = false;
 		}
 	}
@@ -353,9 +353,9 @@ public class MBRFSMv2 {
 		if (!input.isManualIntakeButtonPressed() && !input.isManualOuttakeButtonPressed()) {
 			intakeMotor.set(0);
 		} else if (input.isManualIntakeButtonPressed() && !input.isManualOuttakeButtonPressed()) {
-			intakeMotor.set(0.2);
+			intakeMotor.set(MechConstants.MANUAL_INTAKE_POWER);
 		} else if (input.isManualOuttakeButtonPressed() && !input.isManualIntakeButtonPressed()) {
-			intakeMotor.set(-0.2);
+			intakeMotor.set(MechConstants.MANUAL_OUTTAKE_POWER);
 		}
 	}
 
@@ -375,13 +375,13 @@ public class MBRFSMv2 {
 		shooterLeftMotor.set(0);
 		shooterRightMotor.set(0);
 		if (input.isIntakeButtonPressed() && !holding && !input.isManualIntakeButtonPressed()) {
-			intakeMotor.set(0.2);
+			intakeMotor.set(MechConstants.INTAKE_POWER);
 		} else if (!input.isManualIntakeButtonPressed() && !input.isManualOuttakeButtonPressed()) {
 			intakeMotor.set(0);
 		} else if (input.isManualIntakeButtonPressed() && !input.isManualOuttakeButtonPressed()) {
-			intakeMotor.set(0.2);
+			intakeMotor.set(MechConstants.MANUAL_INTAKE_POWER);
 		} else if (input.isManualOuttakeButtonPressed() && !input.isManualIntakeButtonPressed()) {
-			intakeMotor.set(-0.2);
+			intakeMotor.set(MechConstants.MANUAL_OUTTAKE_POWER);
 		}
 	}
 
