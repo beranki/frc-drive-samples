@@ -54,25 +54,6 @@
               }
             ]
           }
-        },
-        {
-          "type": "sequential",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "B1_C5"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "S_TON"
-                }
-              }
-            ]
-          }
         }
       ]
     }
