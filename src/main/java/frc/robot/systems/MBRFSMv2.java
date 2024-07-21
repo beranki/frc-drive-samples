@@ -415,23 +415,37 @@ public class MBRFSMv2 {
 		//led.greenLight(false);
 		// shooterLeftMotor.set(0);
 		// shooterRightMotor.set(0);
-		pivotMotor.set(pid(throughBore.getDistance(), MechConstants.SHOOTER_ENCODER_ROTATIONS));
+		if (!holding) {
+			led.redLight(false);
+		} else {
+			led.rainbow();
+		}
+
+		pivotMotor.set(pid(throughBore.getDistance(), MechConstants.AMP_ENCODER_ROTATIONS));
 		// if (input.isShootAmpButtonPressed()) {
 		// 	intakeMotor.set(AMP_SHOOT_POWER);
 		// } else {
 		// 	intakeMotor.set(0);
 		// }
 
-		if (input.isAmpButtonPressed() && !input.isShootAmpButtonPressed()) {
-			shooterLeftMotor.set(-MechConstants.AMP_SHOOTER_POWER); // dont forget the - sign
-			shooterRightMotor.set(MechConstants.AMP_SHOOTER_POWER);
-			intakeMotor.set(0);
-		}
+		//if (input.isAmpButtonPressed() && !input.isShootAmpButtonPressed()) {
+		//	shooterLeftMotor.set(-MechConstants.AMP_SHOOTER_POWER); // dont forget the - sign
+		//	shooterRightMotor.set(MechConstants.AMP_SHOOTER_POWER);
+		//	intakeMotor.set(0);
+		//}
 
-		if (input.isAmpButtonPressed() && input.isShootAmpButtonPressed()) {
-			shooterLeftMotor.set(-MechConstants.AMP_SHOOTER_POWER);
-			shooterRightMotor.set(MechConstants.AMP_SHOOTER_POWER);
+		//if (input.isAmpButtonPressed() && input.isShootAmpButtonPressed()) {
+		//	shooterLeftMotor.set(-MechConstants.AMP_SHOOTER_POWER);
+		//	shooterRightMotor.set(MechConstants.AMP_SHOOTER_POWER);
+		//	intakeMotor.set(MechConstants.AMP_OUTTAKE_POWER);
+		//}
+
+		if (input.isManualIntakeButtonPressed() && !input.isManualOuttakeButtonPressed()) {
+			intakeMotor.set(MechConstants.MANUAL_INTAKE_POWER);
+		} else if (input.isManualOuttakeButtonPressed() && !input.isManualIntakeButtonPressed()) {
 			intakeMotor.set(MechConstants.AMP_OUTTAKE_POWER);
+		} else {
+			intakeMotor.set(0);
 		}
 	}
 

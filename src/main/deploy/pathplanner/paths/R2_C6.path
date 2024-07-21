@@ -124,7 +124,7 @@
     },
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 0.65,
+      "waypointRelativePos": 0.95,
       "command": {
         "type": "sequential",
         "data": {
@@ -141,7 +141,7 @@
     },
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 2.3,
+      "waypointRelativePos": 3.25,
       "command": {
         "type": "sequential",
         "data": {
@@ -158,7 +158,7 @@
     },
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 3.2,
+      "waypointRelativePos": 2.5,
       "command": {
         "type": "parallel",
         "data": {

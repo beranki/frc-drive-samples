@@ -11,21 +11,21 @@ public final class MechConstants {
 	public static final float TIMED_INTAKING_DURATION = 1.5f;
 	public static final float TIMED_REVVING_DURATION = 2;
 
-	public static final float INTAKE_POWER = 0.3f; //0.4
-	public static final float AUTO_INTAKE_POWER = 0.3f;
+	public static final float INTAKE_POWER = 0.2f; //0.4
+	public static final float AUTO_INTAKE_POWER = 0.2f;
 	public static final float OUTTAKE_POWER = -0.8f;
-	public static final float MANUAL_INTAKE_POWER = 0.4f;
-	public static final float MANUAL_OUTTAKE_POWER = -0.4f;
+	public static final float MANUAL_INTAKE_POWER = 0.2f;
+	public static final float MANUAL_OUTTAKE_POWER = -0.2f;
 	public static final float TELE_HOLDING_POWER = 0.0f;
 	public static final float AUTO_HOLDING_POWER = 0.05f;
 	public static final int AVERAGE_SIZE = 7;
 	public static final float CURRENT_THRESHOLD = 11.0f;
-	public static final int NOTE_FRAMES_MIN = 3;
+	public static final int NOTE_FRAMES_MIN = 5;
 
 	public static final double MIN_TURN_SPEED = -0.4;
 	public static final double MAX_TURN_SPEED = 0.4;
-	public static final double MIN_TURN_SPEED_AUTO = -0.5;
-	public static final double MAX_TURN_SPEED_AUTO = 0.5;
+	public static final double MIN_TURN_SPEED_AUTO = -0.6;
+	public static final double MAX_TURN_SPEED_AUTO = 0.6;
 	public static final double PID_CONSTANT_PIVOT_P = 0.00075;
 	public static final double PID_CONSTANT_PIVOT_P_AUTO = 0.001;
 

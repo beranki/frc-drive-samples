@@ -20,12 +20,12 @@
         "y": 5.933015658517901
       },
       "prevControl": {
-        "x": 13.864872870246636,
-        "y": 5.8930156585179025
+        "x": 13.714872870246632,
+        "y": 5.693015658517902
       },
       "nextControl": {
-        "x": 14.115158105092597,
-        "y": 6.226729304979183
+        "x": 14.116872870246635,
+        "y": 6.229015658517901
       },
       "isLocked": false,
       "linkedName": null
@@ -77,7 +77,7 @@
     },
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 0.5,
+      "waypointRelativePos": 0.55,
       "command": {
         "type": "sequential",
         "data": {
@@ -94,7 +94,7 @@
     },
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 1.25,
+      "waypointRelativePos": 1.35,
       "command": {
         "type": "sequential",
         "data": {
@@ -111,7 +111,7 @@
     },
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 1.6,
+      "waypointRelativePos": 1.2,
       "command": {
         "type": "parallel",
         "data": {
