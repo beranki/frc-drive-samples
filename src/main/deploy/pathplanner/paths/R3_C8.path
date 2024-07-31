@@ -16,28 +16,28 @@
     },
     {
       "anchor": {
-        "x": 8.802003336038615,
-        "y": 0.8231149026628132
+        "x": 8.598159963794963,
+        "y": 0.7612043754757987
       },
       "prevControl": {
-        "x": 8.230255907733822,
-        "y": 0.7618562496301566
+        "x": 7.602738857403534,
+        "y": 0.6675176831095468
       },
       "nextControl": {
-        "x": 9.413876361026901,
-        "y": 0.8886727267687012
+        "x": 9.572881114852114,
+        "y": 0.8529428367517656
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 15.892125666183354,
-        "y": 4.391019014596169
+        "x": 16.01111949727466,
+        "y": 4.590647925946351
       },
       "prevControl": {
-        "x": 14.68763910021165,
-        "y": 1.6680824133609227
+        "x": 14.806632931302955,
+        "y": 1.8677113247111052
       },
       "nextControl": null,
       "isLocked": false,
@@ -47,16 +47,11 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.5,
-      "rotationDegrees": 13.594609696971233,
+      "rotationDegrees": 15.623072324065573,
       "rotateFast": false
     },
     {
-      "waypointRelativePos": 1.0,
-      "rotationDegrees": 4.014175695411105,
-      "rotateFast": false
-    },
-    {
-      "waypointRelativePos": 1.6,
+      "waypointRelativePos": 1.45,
       "rotationDegrees": 16.023320849891892,
       "rotateFast": false
     }
@@ -82,7 +77,7 @@
     },
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 0.45,
+      "waypointRelativePos": 0.5,
       "command": {
         "type": "sequential",
         "data": {
@@ -99,7 +94,7 @@
     },
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 1.5,
+      "waypointRelativePos": 1.4,
       "command": {
         "type": "sequential",
         "data": {
@@ -116,7 +111,7 @@
     },
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 1.35,
+      "waypointRelativePos": 1.3,
       "command": {
         "type": "parallel",
         "data": {
@@ -133,7 +128,7 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 3.0,
+    "maxVelocity": 3.7,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
@@ -149,5 +144,5 @@
     "rotation": 60.0,
     "velocity": 0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }
